@@ -42,7 +42,8 @@ const features = [
 defineEmits(['go-back', 'go-next', 'go-home']);
 </script>
 
-<style scoped>
+<style>
 @import '../../styles/base.css';
 @import '../../styles/containers.css';
+@import '../../styles/buttons.css';
 </style>

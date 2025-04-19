@@ -1,4 +1,4 @@
-// src/App.vue
+// src/App.vue (With CSS Imports)
 <template>
   <div id="app">
     <div class="video-page">
@@ -8,23 +8,46 @@
         @progress="handleProgress"
         @welcome-shown="handleWelcomeShown"
       >
-        <!-- Container display based on activeContainer state -->
+        <!-- Simply show the active container -->
         <div class="container-wrapper">
-          <!-- Welcome Container -->
           <WelcomeContainer 
-            v-if="activeContainer === CONTAINERS.WELCOME"
-            @read-more="navigateTo(CONTAINERS.PRECISION)"
+            v-if="activeContainer === 'welcome'"
+            @read-more="goToContainer('precision')"
           />
           
-          <!-- Precision Container -->
           <PrecisionContainer 
-            v-if="activeContainer === CONTAINERS.PRECISION"
-            @go-back="navigateTo(CONTAINERS.WELCOME)"
-            @go-next="navigateTo(CONTAINERS.FLEXIBILITY)"
-            @go-home="navigateTo(CONTAINERS.WELCOME)"
+            v-if="activeContainer === 'precision'"
+            @go-back="goToContainer('welcome')"
+            @go-next="goToContainer('flexibility')"
+            @go-home="goToContainer('welcome')"
           />
           
-          <!-- Remaining containers would be added here in the same pattern... -->
+          <FlexibilityContainer 
+            v-if="activeContainer === 'flexibility'"
+            @go-back="goToContainer('precision')"
+            @go-next="goToContainer('collaboration')"
+            @go-home="goToContainer('welcome')"
+          />
+          
+          <CollaborationContainer 
+            v-if="activeContainer === 'collaboration'"
+            @go-back="goToContainer('flexibility')"
+            @go-next="goToContainer('technology')"
+            @go-home="goToContainer('welcome')"
+          />
+          
+          <TechnologyContainer 
+            v-if="activeContainer === 'technology'"
+            @go-back="goToContainer('collaboration')"
+            @go-next="goToContainer('threedimage')"
+            @go-home="goToContainer('welcome')"
+          />
+          
+          <ThreeDImageContainer 
+            v-if="activeContainer === 'threedimage'"
+            @go-back="goToContainer('technology')"
+            @go-home="goToContainer('welcome')"
+          />
         </div>
       </AutoPlayVideoComponent>
     </div>
@@ -36,10 +59,14 @@ import { ref } from 'vue';
 import AutoPlayVideoComponent from './components/AutoPlayVideoComponent.vue';
 import WelcomeContainer from './components/containers/WelcomeContainer.vue';
 import PrecisionContainer from './components/containers/PrecisionContainer.vue';
-import { CONTAINERS, NAVIGATION_MAP } from './constants/navigation';
+import FlexibilityContainer from './components/containers/FlexibilityContainer.vue';
+import CollaborationContainer from './components/containers/CollaborationContainer.vue';
+import TechnologyContainer from './components/containers/TechnologyContainer.vue';
+import ThreeDImageContainer from './components/containers/ThreeDImageContainer.vue';
 
-// Active container state
-const activeContainer = ref(CONTAINERS.WELCOME);
+// Simple active container state
+const activeContainer = ref('welcome');
+const showWelcome = ref(false);
 const videoProgress = ref(0);
 
 // Event handlers
@@ -53,16 +80,35 @@ const handleProgress = (progress) => {
 
 const handleWelcomeShown = () => {
   console.log('Welcome message shown');
+  showWelcome.value = true;
 };
 
-// Navigation function
-const navigateTo = (containerId) => {
-  if (CONTAINERS[containerId]) {
-    activeContainer.value = containerId;
-  }
+// Simple navigation function
+const goToContainer = (containerName) => {
+  console.log(`Navigating to: ${containerName}`);
+  activeContainer.value = containerName;
 };
 </script>
 
 <style>
 @import './styles/base.css';
+@import './styles/containers.css';
+@import './styles/buttons.css';
+
+/* Add these critical styles directly in App.vue to ensure visibility */
+.container-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10; /* Make sure it's above the video */
+}
+
+/* If containers still aren't visible, add this debugging style temporarily */
+/* 
+.container-base {
+  border: 3px solid red !important;
+  z-index: 999 !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+*/
 </style>

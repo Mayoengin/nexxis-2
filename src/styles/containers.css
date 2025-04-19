@@ -1,0 +1,274 @@
+.container-base {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1200px; /* Increased from 800px to 1000px for better fit */
+  max-width: 95%;
+  padding: 50px;
+  background-color: rgba(198, 206, 220, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  z-index: 20;
+}
+
+.container-base::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(45deg, rgba(66, 133, 244, 0.1), rgba(66, 133, 244, 0.05));
+  filter: blur(20px);
+  z-index: -1;
+}
+
+.container-content {
+  position: relative;
+}
+
+/* Feature list styles - fixed for all containers */
+.feature-list-simple {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin: 30px auto;
+  width: 100%; /* Increased from 90% */
+}
+
+.feature-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 30px;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #34495e;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.feature-item::before {
+  content: '*';
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Container-specific feature colors */
+.precision-container .feature-item::before {
+  color: #3498db; /* Blue */
+}
+
+.flexibility-container .feature-item::before {
+  color: #27ae60; /* Green */
+}
+
+.collaboration-container .feature-item::before {
+  color: #9b59b6; /* Purple */
+}
+
+.technology-container .feature-item::before {
+  color: #e67e22; /* Orange */
+}
+
+/* Welcome container styles */
+.welcome-box .feature-list {
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.welcome-box .feature-item {
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.welcome-box .feature-item::before {
+  content: none;
+}
+
+.welcome-box .icon-wrapper {
+  position: relative;
+  min-width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.welcome-box .pulse-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(52, 152, 219, 0.15);
+  border-radius: 50%;
+  animation: pulse-animation 2s infinite;
+}
+
+.welcome-box .feature-icon {
+  font-size: 1.5rem;
+  z-index: 2;
+}
+
+@keyframes pulse-animation {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 0.3; }
+  100% { transform: scale(0.8); opacity: 0.7; }
+}
+
+/* Special container elements */
+/* Technology Container */
+.certification-note {
+  display: flex;
+  align-items: center;
+  margin: 30px auto;
+  padding: 15px;
+  background-color: rgba(46, 204, 113, 0.1);
+  border-left: 4px solid #2ecc71;
+  border-radius: 4px;
+  width: 100%; /* Increased from 90% */
+  text-align: left;
+}
+
+.cert-icon {
+  font-size: 2rem;
+  min-width: 40px;
+  margin-right: 15px;
+  color: #2ecc71;
+  flex-shrink: 0;
+}
+
+.certification-note p {
+  font-size: 0.95rem;
+  color: #34495e;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 3D Image Container */
+.monitor-showcase {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  gap: 30px;
+}
+
+.monitor-icon {
+  font-size: 4rem;
+}
+
+.glasses-icon {
+  font-size: 2.5rem;
+}
+
+.translation-feature {
+  background-color: rgba(52, 152, 219, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 30px auto;
+  width: 100%; /* Increased from 90% */
+}
+
+.display-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.display-3d {
+  font-size: 2rem;
+  color: #9b59b6;
+}
+
+.arrow-icon {
+  font-size: 1.5rem;
+  color: #34495e;
+}
+
+.display-2d {
+  font-size: 2rem;
+  color: #3498db;
+}
+
+.translation-feature p {
+  margin: 0;
+  color: #34495e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container-base {
+    padding: 30px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .section-description {
+    font-size: 1rem;
+  }
+  
+  .button-container {
+    flex-wrap: wrap;
+  }
+}
+
+/* src/components/ui/FeatureList.vue (Updated for better alignment) */
+.feature-list-simple {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin: 30px auto;
+  width: 100%;
+}
+
+.feature-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 30px;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #34495e;
+  line-height: 1.4;
+}
+
+.feature-item::before {
+  content: '*';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Color variants for the asterisks */
+.color-blue .feature-item::before {
+  color: #3498db;
+}
+
+.color-green .feature-item::before {
+  color: #27ae60;
+}
+
+.color-purple .feature-item::before {
+  color: #9b59b6;
+}
+
+.color-orange .feature-item::before {
+  color: #e67e22;
+}
