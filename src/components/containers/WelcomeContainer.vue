@@ -75,11 +75,6 @@
           <span class="button-icon">📖</span>
         </button>
       </div>
-      
-      <!-- Bell Badge -->
-      <div class="badge-bell" :class="{ 'active': bellActive }" @click="toggleBell">
-        <div class="bell-icon">🔔</div>
-      </div>
     </div>
   </div>
 </template>
@@ -286,41 +281,6 @@ const emit = defineEmits(['read-more', 'open-video-gallery']);
 
 .video-thumbnail:hover .view-full-icon {
   opacity: 1;
-}
-
-/* Bell badge styles */
-.badge-bell {
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.5);
-  transform: scale(0);
-  animation: fade-in-bell 1s ease 1.8s forwards;
-  cursor: pointer;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.badge-bell.active {
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
-  box-shadow: 0 4px 10px rgba(46, 204, 113, 0.5);
-}
-
-.bell-icon {
-  color: white;
-  font-weight: bold;
-  font-size: 1.6rem;
-  animation: ring 1s ease 2s;
-}
-
-.badge-bell:hover .bell-icon {
-  animation: ring 0.5s ease;
 }
 
 /* Feature list container specific to welcome page */
