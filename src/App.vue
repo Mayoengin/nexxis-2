@@ -10,53 +10,24 @@
       >
         <!-- Show the active container -->
         <div class="container-wrapper">
-          <WelcomeContainer 
-            v-if="activeContainer === 'welcome'"
-            @read-more="goToContainer('precision')"
-            @open-video-gallery="openVideoGallery"
-          />
-          
-          <PrecisionContainer 
-            v-if="activeContainer === 'precision'"
-            @go-back="goToContainer('welcome')"
-            @go-next="goToContainer('flexibility')"
-            @go-home="goToContainer('welcome')"
-          />
-          
-          <FlexibilityContainer 
-            v-if="activeContainer === 'flexibility'"
-            @go-back="goToContainer('precision')"
-            @go-next="goToContainer('collaboration')"
-            @go-home="goToContainer('welcome')"
-          />
-          
-          <CollaborationContainer 
-            v-if="activeContainer === 'collaboration'"
-            @go-back="goToContainer('flexibility')"
-            @go-next="goToContainer('technology')"
-            @go-home="goToContainer('welcome')"
-          />
-          
-          <TechnologyContainer 
-            v-if="activeContainer === 'technology'"
-            @go-back="goToContainer('collaboration')"
-            @go-next="goToContainer('threedimage')"
-            @go-home="goToContainer('welcome')"
-          />
-          
-          <ThreeDImageContainer 
-            v-if="activeContainer === 'threedimage'"
-            @go-back="goToContainer('technology')"
-            @go-home="goToContainer('welcome')"
-          />
-          
-          <!-- Add the VideoGalleryContainer -->
-          <VideoGalleryContainer 
-            v-if="activeContainer === 'videogallery'"
-            :initialVideoSrc="selectedVideoSrc"
-            :videoData="videoOptions"
-            @go-back="goToContainer('welcome')"
-          />
+          <TransitionContainer 
+            :transitionName="transitionDirection"
+            @animation-start="handleAnimationStart"
+            @animation-end="handleAnimationEnd"
+          >
+            <component 
+              :is="currentComponent" 
+              :key="activeContainer"
+              :isAnimating="isAnimating"
+              :initialVideoSrc="selectedVideoSrc"
+              :videoData="videoOptions"
+              @read-more="goToContainer('precision')"
+              @open-video-gallery="openVideoGallery"
+              @go-back="handleNavigation('back')"
+              @go-next="handleNavigation('next')"
+              @go-home="goToContainer('welcome')"
+            />
+          </TransitionContainer>
         </div>
       </AutoPlayVideoComponent>
     </div>
@@ -64,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AutoPlayVideoComponent from './components/AutoPlayVideoComponent.vue';
 import WelcomeContainer from './components/containers/WelcomeContainer.vue';
 import PrecisionContainer from './components/containers/PrecisionContainer.vue';
@@ -73,14 +44,33 @@ import CollaborationContainer from './components/containers/CollaborationContain
 import TechnologyContainer from './components/containers/TechnologyContainer.vue';
 import ThreeDImageContainer from './components/containers/ThreeDImageContainer.vue';
 import VideoGalleryContainer from './components/containers/VideoGalleryContainer.vue';
+import TransitionContainer from './components/ui/TransitionContainer.vue';
+import { NAVIGATION_MAP } from './constants/navigation';
 
 // Active container state
 const activeContainer = ref('welcome');
 const showWelcome = ref(false);
 const videoProgress = ref(0);
+const isAnimating = ref(false);
+const transitionDirection = ref('slide-up');
 
 // Video gallery state
 const selectedVideoSrc = ref('');
+
+// Component mapping based on active container
+const currentComponent = computed(() => {
+  const componentMap = {
+    'welcome': WelcomeContainer,
+    'precision': PrecisionContainer,
+    'flexibility': FlexibilityContainer,
+    'collaboration': CollaborationContainer,
+    'technology': TechnologyContainer,
+    'threedimage': ThreeDImageContainer,
+    'videogallery': VideoGalleryContainer
+  };
+  
+  return componentMap[activeContainer.value] || WelcomeContainer;
+});
 
 // Video options data for the gallery
 const videoOptions = [
@@ -130,11 +120,48 @@ const handleWelcomeShown = () => {
   showWelcome.value = true;
 };
 
+// Animation handlers
+const handleAnimationStart = () => {
+  isAnimating.value = true;
+};
+
+const handleAnimationEnd = () => {
+  isAnimating.value = false;
+};
+
+// Handle navigation based on direction
+const handleNavigation = (direction) => {
+  if (isAnimating.value) return;
+  
+  if (direction === 'next') {
+    const nextContainer = NAVIGATION_MAP[activeContainer.value]?.next;
+    if (nextContainer) {
+      transitionDirection.value = 'slide-up';
+      goToContainer(nextContainer);
+    }
+  } else if (direction === 'back') {
+    // Special case for VideoGallery - always go back to welcome
+    if (activeContainer.value === 'videogallery') {
+      transitionDirection.value = 'slide-down';
+      goToContainer('welcome');
+      return;
+    }
+    
+    // Normal navigation for other containers
+    const prevContainer = NAVIGATION_MAP[activeContainer.value]?.prev;
+    if (prevContainer) {
+      transitionDirection.value = 'slide-down';
+      goToContainer(prevContainer);
+    }
+  }
+};
+
 // Video gallery handler
 const openVideoGallery = (videoSrc) => {
   console.log('Opening video gallery with source:', videoSrc);
   selectedVideoSrc.value = videoSrc;
-  activeContainer.value = 'videogallery';
+  transitionDirection.value = 'slide-up';
+  goToContainer('videogallery');
 };
 
 // Navigation function
@@ -155,5 +182,6 @@ const goToContainer = (containerName) => {
   width: 100%;
   height: 100%;
   z-index: 10; /* Above the video */
+  overflow: hidden; /* Important to contain animations */
 }
 </style>

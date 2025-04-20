@@ -2,7 +2,11 @@
 <template>
   <div class="container-base video-gallery-container">
     <!-- Close button (X) outside the container in the top-right -->
-    <button class="close-button" @click="$emit('go-back')">
+    <button 
+      class="close-button" 
+      @click="handleClose"
+      :disabled="isAnimating"
+    >
       ✕
     </button>
     
@@ -23,7 +27,7 @@
         <button 
           class="slider-nav prev-button" 
           @click="scrollSlider('left')"
-          :disabled="sliderAtStart"
+          :disabled="sliderAtStart || isAnimating"
         >
           ◀
         </button>
@@ -46,7 +50,7 @@
         <button 
           class="slider-nav next-button" 
           @click="scrollSlider('right')"
-          :disabled="sliderAtEnd"
+          :disabled="sliderAtEnd || isAnimating"
         >
           ▶
         </button>
@@ -67,6 +71,10 @@ const props = defineProps({
   videoData: {
     type: Array,
     default: () => []
+  },
+  isAnimating: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -140,6 +148,8 @@ function findVideoBySource(src) {
 }
 
 function selectVideo(video) {
+  if (props.isAnimating) return;
+  
   currentVideo.value = video;
   
   // Reset video to beginning when switching and apply muted state
@@ -150,6 +160,11 @@ function selectVideo(video) {
   }
 }
 
+function handleClose() {
+  console.log('Close button clicked, returning to welcome container');
+  emit('go-back');
+}
+
 function updateMuteState() {
   if (mainVideoRef.value) {
     isMuted.value = mainVideoRef.value.muted;
@@ -157,7 +172,7 @@ function updateMuteState() {
 }
 
 function scrollSlider(direction) {
-  if (!sliderRef.value) return;
+  if (!sliderRef.value || props.isAnimating) return;
   
   const scrollAmount = 200; // Adjust as needed
   
@@ -240,9 +255,14 @@ onMounted(() => {
   transition: all 0.2s ease;
 }
 
-.close-button:hover {
+.close-button:hover:not(:disabled) {
   background: rgba(231, 76, 60, 0.9);
   transform: scale(1.1);
+}
+
+.close-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .main-video-container {

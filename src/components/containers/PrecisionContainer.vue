@@ -34,7 +34,6 @@
 import BrandTitle from '../ui/BrandTitle.vue';
 import FeatureList from '../ui/FeatureList.vue';
 import NavigationButtons from '../ui/NavigationButtons.vue';
-import { CONTAINERS } from '../../constants/navigation';
 import { BACK_ICON, NEXT_ICON, HOME_ICON } from '../../icons/index';
 
 // Features data

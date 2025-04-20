@@ -23,24 +23,36 @@
         <p>3D source images are automatically translated into 2D or 3D for maximum visibility.</p>
       </div>
       
-      <div class="button-container">
-        <button class="action-button back-button" @click="$emit('go-back')">
-          <span class="button-text">Back</span>
-          <span class="button-icon">◀</span>
-        </button>
-        
-        <button class="action-button home-button" @click="$emit('go-home')">
-          <span class="button-text">Home</span>
-          <span class="button-icon">🏠</span>
-        </button>
-      </div>
+      <NavigationButtons 
+        :showBack="true"
+        :showNext="false"
+        :showHome="true"
+        :isAnimating="isAnimating"
+        :backIcon="BACK_ICON"
+        :nextIcon="NEXT_ICON"
+        :homeIcon="HOME_ICON"
+        @go-back="$emit('go-back')"
+        @go-next="$emit('go-next')"
+        @go-home="$emit('go-home')"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
+import NavigationButtons from '../ui/NavigationButtons.vue';
+import { BACK_ICON, NEXT_ICON, HOME_ICON } from '../../icons/index';
+
+// Animation state
+const props = defineProps({
+  isAnimating: {
+    type: Boolean,
+    default: false
+  }
+});
+
 // Define emits
-defineEmits(['go-back', 'go-home']);
+defineEmits(['go-back', 'go-next', 'go-home']);
 </script>
 
 <style scoped>
@@ -48,6 +60,4 @@ defineEmits(['go-back', 'go-home']);
 @import '../../styles/base.css';
 @import '../../styles/containers.css';
 @import '../../styles/buttons.css';
-
-
 </style>

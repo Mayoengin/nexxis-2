@@ -21,35 +21,41 @@
         <p>Certified as a medical device (CE/FDA), Nexxis is fit for use in the interventional OR. Every part of the solution has been designed and approved for use in a surgical environment.</p>
       </div>
       
-      <div class="button-container">
-        <button class="action-button back-button" @click="$emit('go-back')">
-          <span class="button-text">Back</span>
-          <span class="button-icon">◀</span>
-        </button>
-        
-        <button class="action-button next-button" @click="$emit('go-next')">
-          <span class="button-text">Next</span>
-          <span class="button-icon">▶</span>
-        </button>
-        
-        <button class="action-button home-button" @click="$emit('go-home')">
-          <span class="button-text">Home</span>
-          <span class="button-icon">🏠</span>
-        </button>
-      </div>
+      <NavigationButtons 
+        :showBack="true"
+        :showNext="true"
+        :showHome="true"
+        :isAnimating="isAnimating"
+        :backIcon="BACK_ICON"
+        :nextIcon="NEXT_ICON"
+        :homeIcon="HOME_ICON"
+        @go-back="$emit('go-back')"
+        @go-next="$emit('go-next')"
+        @go-home="$emit('go-home')"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
+import NavigationButtons from '../ui/NavigationButtons.vue';
+import { BACK_ICON, NEXT_ICON, HOME_ICON } from '../../icons/index';
+
+// Animation state
+const props = defineProps({
+  isAnimating: {
+    type: Boolean,
+    default: false
+  }
+});
+
 // Define emits
 defineEmits(['go-back', 'go-next', 'go-home']);
 </script>
+
 <style scoped>
 /* Correct path going from src/components/containers to src/assets/styles */
 @import '../../styles/base.css';
 @import '../../styles/containers.css';
 @import '../../styles/buttons.css';
-
-
 </style>
