@@ -17,25 +17,12 @@
       
 
       
-      <NavigationButtons 
-        :showBack="true"
-        :showNext="true"
-        :showHome="true"
-        :isAnimating="isAnimating"
-        :backIcon="BACK_ICON"
-        :nextIcon="NEXT_ICON"
-        :homeIcon="HOME_ICON"
-        @go-back="$emit('go-back')"
-        @go-next="$emit('go-next')"
-        @go-home="$emit('go-home')"
-      />
+
     </div>
   </div>
 </template>
 
 <script setup>
-import NavigationButtons from '../ui/NavigationButtons.vue';
-import { BACK_ICON, NEXT_ICON, HOME_ICON } from '../../icons/index';
 
 // Animation state
 const props = defineProps({

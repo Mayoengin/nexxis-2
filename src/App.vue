@@ -8,6 +8,19 @@
         @progress="handleProgress"
         @welcome-shown="handleWelcomeShown"
       >
+        <!-- Side Navigation Arrows - hide for video gallery -->
+        <SideNavigationArrows
+          v-if="activeContainer !== 'videogallery'"
+          :showBack="hasPrevious"
+          :showNext="hasNext"
+          :showHome="!isOnWelcome"
+          :isAnimating="isAnimating"
+          :homeIcon="HOME_ICON"
+          @go-back="handleNavigation('back')"
+          @go-next="handleNavigation('next')"
+          @go-home="goToContainer('welcome')"
+        />
+        
         <!-- Show the active container -->
         <div class="container-wrapper">
           <TransitionContainer 
@@ -44,17 +57,32 @@ import TechnologyContainer from './components/containers/TechnologyContainer.vue
 import ThreeDImageContainer from './components/containers/ThreeDImageContainer.vue';
 import VideoGalleryContainer from './components/containers/VideoGalleryContainer.vue';
 import TransitionContainer from './components/ui/TransitionContainer.vue';
-import { NAVIGATION_MAP } from './constants/navigation';
+import SideNavigationArrows from './components/ui/SideNavigationArrows.vue';
+import { NAVIGATION_MAP, CONTAINERS } from './constants/navigation';
+import { HOME_ICON } from './icons/index';
 
 // Active container state
 const activeContainer = ref('welcome');
 const showWelcome = ref(false);
 const videoProgress = ref(0);
 const isAnimating = ref(false);
-const transitionDirection = ref('slide-up');
+const transitionDirection = ref('slide-right');
 
 // Video gallery state
 const selectedVideoSrc = ref('');
+
+// Computed properties for navigation
+const hasPrevious = computed(() => {
+  return NAVIGATION_MAP[activeContainer.value]?.prev !== null;
+});
+
+const hasNext = computed(() => {
+  return NAVIGATION_MAP[activeContainer.value]?.next !== null;
+});
+
+const isOnWelcome = computed(() => {
+  return activeContainer.value === CONTAINERS.WELCOME;
+});
 
 // Component mapping based on active container
 const currentComponent = computed(() => {
@@ -138,13 +166,13 @@ const handleNavigation = (direction) => {
   if (direction === 'next') {
     const nextContainer = NAVIGATION_MAP[activeContainer.value]?.next;
     if (nextContainer) {
-      transitionDirection.value = 'slide-up';
+      transitionDirection.value = 'slide-right';
       goToContainer(nextContainer);
     }
   } else if (direction === 'back') {
     // Special case for VideoGallery - always go back to welcome
     if (activeContainer.value === 'videogallery') {
-      transitionDirection.value = 'slide-down';
+      transitionDirection.value = 'slide-left';
       goToContainer('welcome');
       return;
     }
@@ -152,7 +180,7 @@ const handleNavigation = (direction) => {
     // Normal navigation for other containers
     const prevContainer = NAVIGATION_MAP[activeContainer.value]?.prev;
     if (prevContainer) {
-      transitionDirection.value = 'slide-down';
+      transitionDirection.value = 'slide-left';
       goToContainer(prevContainer);
     }
   }
@@ -162,7 +190,7 @@ const handleNavigation = (direction) => {
 const openVideoGallery = (videoSrc) => {
   console.log('Opening video gallery with source:', videoSrc);
   selectedVideoSrc.value = videoSrc;
-  transitionDirection.value = 'slide-up';
+  transitionDirection.value = 'slide-right';
   goToContainer('videogallery');
 };
 

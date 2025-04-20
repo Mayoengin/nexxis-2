@@ -18,7 +18,7 @@ import { defineProps, defineEmits } from 'vue';
 const props = defineProps({
   transitionName: {
     type: String,
-    default: 'slide-up'
+    default: 'slide-right'
   }
 });
 
@@ -43,35 +43,35 @@ const onAfterEnter = () => {
 </script>
 
 <style scoped>
-/* Slide Up Animation (going to next container) */
-.slide-up-enter-active,
-.slide-up-leave-active {
+/* Slide Right Animation (going to next container) */
+.slide-right-enter-active,
+.slide-right-leave-active {
   transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-.slide-up-enter-from {
+.slide-right-enter-from {
   opacity: 0;
-  transform: translate(-50%, 100%);
+  transform: translate(-150%, -50%);
 }
 
-.slide-up-leave-to {
+.slide-right-leave-to {
   opacity: 0;
-  transform: translate(-50%, -150%);
+  transform: translate(150%, -50%);
 }
 
-/* Slide Down Animation (going to previous container) */
-.slide-down-enter-active,
-.slide-down-leave-active {
+/* Slide Left Animation (going to previous container) */
+.slide-left-enter-active,
+.slide-left-leave-active {
   transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-.slide-down-enter-from {
+.slide-left-enter-from {
   opacity: 0;
-  transform: translate(-50%, -150%);
+  transform: translate(150%, -50%);
 }
 
-.slide-down-leave-to {
+.slide-left-leave-to {
   opacity: 0;
-  transform: translate(-50%, 100%);
+  transform: translate(-150%, -50%);
 }
-</style>
+</style>  

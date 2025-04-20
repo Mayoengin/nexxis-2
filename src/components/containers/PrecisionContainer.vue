@@ -13,27 +13,13 @@
         color="blue"
       />
       
-      <NavigationButtons 
-        :showBack="true"
-        :showNext="true"
-        :showHome="false"
-        :isAnimating="isAnimating"
-        :backIcon="BACK_ICON"
-        :nextIcon="NEXT_ICON"
-        :homeIcon="HOME_ICON"
-        @go-back="$emit('go-back')"
-        @go-next="$emit('go-next')"
-        @go-home="$emit('go-home')"
-      />
+      <!-- Navigation buttons removed since we now use side arrows -->
     </div>
   </div>
 </template>
 
 <script setup>
-import BrandTitle from '../ui/BrandTitle.vue';
 import FeatureList from '../ui/FeatureList.vue';
-import NavigationButtons from '../ui/NavigationButtons.vue';
-import { BACK_ICON, NEXT_ICON, HOME_ICON } from '../../icons/index';
 
 // Features data
 const features = [
@@ -50,7 +36,7 @@ const props = defineProps({
   }
 });
 
-// Define emits
+// Define emits (keeping these for potential future use)
 defineEmits(['go-back', 'go-next', 'go-home']);
 </script>
 

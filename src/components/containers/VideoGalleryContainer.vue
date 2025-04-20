@@ -361,6 +361,6 @@ onMounted(() => {
     width: 30px;
     height: 30px;
     font-size: 14px;
-  }
+  } 
 }
 </style>
