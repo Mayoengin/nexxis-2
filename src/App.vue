@@ -1,4 +1,4 @@
-// src/App.vue (With CSS Imports)
+// src/App.vue
 <template>
   <div id="app">
     <div class="video-page">
@@ -8,11 +8,12 @@
         @progress="handleProgress"
         @welcome-shown="handleWelcomeShown"
       >
-        <!-- Simply show the active container -->
+        <!-- Show the active container -->
         <div class="container-wrapper">
           <WelcomeContainer 
             v-if="activeContainer === 'welcome'"
             @read-more="goToContainer('precision')"
+            @open-video-gallery="openVideoGallery"
           />
           
           <PrecisionContainer 
@@ -48,6 +49,14 @@
             @go-back="goToContainer('technology')"
             @go-home="goToContainer('welcome')"
           />
+          
+          <!-- Add the VideoGalleryContainer -->
+          <VideoGalleryContainer 
+            v-if="activeContainer === 'videogallery'"
+            :initialVideoSrc="selectedVideoSrc"
+            :videoData="videoOptions"
+            @go-back="goToContainer('welcome')"
+          />
         </div>
       </AutoPlayVideoComponent>
     </div>
@@ -63,11 +72,49 @@ import FlexibilityContainer from './components/containers/FlexibilityContainer.v
 import CollaborationContainer from './components/containers/CollaborationContainer.vue';
 import TechnologyContainer from './components/containers/TechnologyContainer.vue';
 import ThreeDImageContainer from './components/containers/ThreeDImageContainer.vue';
+import VideoGalleryContainer from './components/containers/VideoGalleryContainer.vue';
 
-// Simple active container state
+// Active container state
 const activeContainer = ref('welcome');
 const showWelcome = ref(false);
 const videoProgress = ref(0);
+
+// Video gallery state
+const selectedVideoSrc = ref('');
+
+// Video options data for the gallery
+const videoOptions = [
+  { 
+    src: '/output.mp4', 
+    label: 'Surgical Procedure', 
+    thumbnail: '/thumbnails/t1.PNG',
+    description: 'High-definition footage of a minimally invasive surgical procedure demonstrating precise instrument control.' 
+  },
+  { 
+    src: '/output1.mp4', 
+    label: 'Endoscopic View', 
+    thumbnail: '/thumbnails/t2.PNG',
+    description: 'Detailed endoscopic visualization with uncompressed transmission for maximum detail clarity.' 
+  },
+  { 
+    src: '/output2.mp4', 
+    label: 'OR Environment', 
+    thumbnail: '/thumbnails/t3.PNG',
+    description: 'Operating room setup with Nexxis integration showing multiple displays and control systems.' 
+  },
+  { 
+    src: '/output3.mp4', 
+    label: 'Remote Consultation', 
+    thumbnail: '/thumbnails/t4.PNG',
+    description: 'Live collaboration session with real-time video sharing between surgical teams in different locations.' 
+  },
+  { 
+    src: '/output4.mp4', 
+    label: 'Laparoscopic Procedure', 
+    thumbnail: '/thumbnails/t5.PNG',
+    description: 'Advanced laparoscopic surgery with 4K video quality showing tissue detail and instrument precision.' 
+  }
+];
 
 // Event handlers
 const handleVideoEnded = () => {
@@ -83,7 +130,14 @@ const handleWelcomeShown = () => {
   showWelcome.value = true;
 };
 
-// Simple navigation function
+// Video gallery handler
+const openVideoGallery = (videoSrc) => {
+  console.log('Opening video gallery with source:', videoSrc);
+  selectedVideoSrc.value = videoSrc;
+  activeContainer.value = 'videogallery';
+};
+
+// Navigation function
 const goToContainer = (containerName) => {
   console.log(`Navigating to: ${containerName}`);
   activeContainer.value = containerName;
@@ -95,20 +149,11 @@ const goToContainer = (containerName) => {
 @import './styles/containers.css';
 @import './styles/buttons.css';
 
-/* Add these critical styles directly in App.vue to ensure visibility */
+/* Critical styles to ensure visibility */
 .container-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
-  z-index: 10; /* Make sure it's above the video */
+  z-index: 10; /* Above the video */
 }
-
-/* If containers still aren't visible, add this debugging style temporarily */
-/* 
-.container-base {
-  border: 3px solid red !important;
-  z-index: 999 !important;
-  background-color: rgba(255, 255, 255, 0.9) !important;
-}
-*/
 </style>

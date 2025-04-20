@@ -1,0 +1,43 @@
+/* src/styles/transitions.css */
+
+/* Container transition animations */
+.container-base {
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+  
+  /* Transition classes for containers */
+  .slide-up-leave {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  .slide-up-leave-active {
+    opacity: 0;
+    transform: translate(-50%, -150%);
+  }
+  
+  .slide-down-enter {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  .slide-down-enter-active {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  
+  .slide-down-leave {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  .slide-down-leave-active {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  
+  .slide-up-enter {
+    opacity: 0;
+    transform: translate(-50%, -150%);
+  }
+  .slide-up-enter-active {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }

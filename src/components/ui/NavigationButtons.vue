@@ -6,6 +6,7 @@
       v-if="showBack" 
       class="action-button back-button" 
       @click="$emit('go-back')"
+      :disabled="isAnimating"
     >
       <span class="button-text">Back</span>
       <span class="button-icon">{{ backIcon }}</span>
@@ -16,6 +17,7 @@
       v-if="showNext" 
       class="action-button next-button" 
       @click="$emit('go-next')"
+      :disabled="isAnimating"
     >
       <span class="button-text">Next</span>
       <span class="button-icon">{{ nextIcon }}</span>
@@ -26,6 +28,7 @@
       v-if="showHome" 
       class="action-button home-button" 
       @click="$emit('go-home')"
+      :disabled="isAnimating"
     >
       <span class="button-text">Home</span>
       <span class="button-icon">{{ homeIcon }}</span>
@@ -60,6 +63,10 @@ const props = defineProps({
   homeIcon: {
     type: String,
     default: '🏠'
+  },
+  isAnimating: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -74,5 +81,21 @@ defineEmits(['go-back', 'go-next', 'go-home']);
   justify-content: center;
   gap: 15px;
   margin-top: 2rem;
+}
+
+/* Disabled button styles */
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-button:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 15px rgba(44, 62, 80, 0.4); /* Keep original shadow */
+}
+
+.action-button:disabled .button-icon {
+  transform: none;
 }
 </style>

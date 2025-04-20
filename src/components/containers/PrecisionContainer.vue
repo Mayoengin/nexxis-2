@@ -18,8 +18,13 @@
         :showBack="true"
         :showNext="true"
         :showHome="false"
+        :isAnimating="isAnimating"
+        :backIcon="BACK_ICON"
+        :nextIcon="NEXT_ICON"
+        :homeIcon="HOME_ICON"
         @go-back="$emit('go-back')"
         @go-next="$emit('go-next')"
+        @go-home="$emit('go-home')"
       />
     </div>
   </div>
@@ -30,6 +35,7 @@ import BrandTitle from '../ui/BrandTitle.vue';
 import FeatureList from '../ui/FeatureList.vue';
 import NavigationButtons from '../ui/NavigationButtons.vue';
 import { CONTAINERS } from '../../constants/navigation';
+import { BACK_ICON, NEXT_ICON, HOME_ICON } from '../../icons/index';
 
 // Features data
 const features = [
@@ -38,11 +44,20 @@ const features = [
   '4K end-to-end'
 ];
 
+// Animation state
+const props = defineProps({
+  isAnimating: {
+    type: Boolean,
+    default: false
+  }
+});
+
 // Define emits
 defineEmits(['go-back', 'go-next', 'go-home']);
 </script>
 
-<style>
+<style scoped>
+/* Import correct styles */
 @import '../../styles/base.css';
 @import '../../styles/containers.css';
 @import '../../styles/buttons.css';
