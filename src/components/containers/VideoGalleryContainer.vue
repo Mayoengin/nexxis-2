@@ -60,17 +60,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, inject } from 'vue';
 
 // Props
 const props = defineProps({
   initialVideoSrc: {
     type: String,
     default: ''
-  },
-  videoData: {
-    type: Array,
-    default: () => []
   },
   isAnimating: {
     type: Boolean,
@@ -81,39 +77,8 @@ const props = defineProps({
 // Define emits
 const emit = defineEmits(['go-back']);
 
-// Videos data if not provided through props
-const defaultVideos = [
-  { 
-    src: '/output.mp4', 
-    label: 'Surgical Procedure', 
-    thumbnail: '/thumbnails/t1.PNG',
-    description: 'High-definition footage of a minimally invasive surgical procedure demonstrating precise instrument control.' 
-  },
-  { 
-    src: '/output1.mp4', 
-    label: 'Endoscopic View', 
-    thumbnail: '/thumbnails/t2.PNG',
-    description: 'Detailed endoscopic visualization with uncompressed transmission for maximum detail clarity.' 
-  },
-  { 
-    src: '/output2.mp4', 
-    label: 'OR Environment', 
-    thumbnail: '/thumbnails/t3.PNG',
-    description: 'Operating room setup with Nexxis integration showing multiple displays and control systems.' 
-  },
-  { 
-    src: '/output3.mp4', 
-    label: 'Remote Consultation', 
-    thumbnail: '/thumbnails/t4.PNG',
-    description: 'Live collaboration session with real-time video sharing between surgical teams in different locations.' 
-  },
-  { 
-    src: '/output4.mp4', 
-    label: 'Laparoscopic Procedure', 
-    thumbnail: '/thumbnails/t5.PNG',
-    description: 'Advanced laparoscopic surgery with 4K video quality showing tissue detail and instrument precision.' 
-  }
-];
+// Inject the video data provided by App.vue
+const videos = inject('videoData');
 
 // References
 const mainVideoRef = ref(null);
@@ -122,15 +87,8 @@ const isMuted = ref(true);
 const sliderScrollPosition = ref(0);
 const sliderMaxScroll = ref(0);
 
-// Computed properties
-const videos = computed(() => {
-  return props.videoData.length > 0 ? props.videoData : defaultVideos;
-});
-
-const currentVideo = ref(null);
-
 // Set initial video on component creation
-currentVideo.value = findVideoBySource(props.initialVideoSrc) || videos.value[0];
+const currentVideo = ref(findVideoBySource(props.initialVideoSrc) || videos[0]);
 
 // Slider navigation state
 const sliderAtStart = computed(() => {
@@ -144,7 +102,7 @@ const sliderAtEnd = computed(() => {
 // Methods
 function findVideoBySource(src) {
   if (!src) return null;
-  return videos.value.find(video => video.src === src);
+  return videos.find(video => video.src === src);
 }
 
 function selectVideo(video) {

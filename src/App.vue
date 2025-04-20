@@ -20,7 +20,6 @@
               :key="activeContainer"
               :isAnimating="isAnimating"
               :initialVideoSrc="selectedVideoSrc"
-              :videoData="videoOptions"
               @read-more="goToContainer('precision')"
               @open-video-gallery="openVideoGallery"
               @go-back="handleNavigation('back')"
@@ -35,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, provide } from 'vue';
 import AutoPlayVideoComponent from './components/AutoPlayVideoComponent.vue';
 import WelcomeContainer from './components/containers/WelcomeContainer.vue';
 import PrecisionContainer from './components/containers/PrecisionContainer.vue';
@@ -72,8 +71,8 @@ const currentComponent = computed(() => {
   return componentMap[activeContainer.value] || WelcomeContainer;
 });
 
-// Video options data for the gallery
-const videoOptions = [
+// Define the shared video data
+const videoData = [
   { 
     src: '/output.mp4', 
     label: 'Surgical Procedure', 
@@ -105,6 +104,9 @@ const videoOptions = [
     description: 'Advanced laparoscopic surgery with 4K video quality showing tissue detail and instrument precision.' 
   }
 ];
+
+// Provide the video data to all child components
+provide('videoData', videoData);
 
 // Event handlers
 const handleVideoEnded = () => {

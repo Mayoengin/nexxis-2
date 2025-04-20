@@ -2,7 +2,6 @@
 <template>
   <div class="container-base precision-container">
     <div class="container-content">
-      <BrandTitle />
       <h2 class="section-title">The precision you need</h2>
       
       <p class="section-description">

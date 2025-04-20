@@ -2,13 +2,13 @@
 <template>
   <div class="container-base welcome-box">
     <div class="container-content">
-      <BrandTitle />
-      
-      <h1>
-        <span class="title-word">Subscribe</span>
-        <span class="title-word">to this</span>
-        <span class="title-word">product</span>
-      </h1>
+      <div class="welcome-header">
+        <h1 class="left-aligned-title">
+          <span class="title-word">Subscribe</span>
+          <span class="title-word">to this</span>
+          <span class="title-word">product</span>
+        </h1>
+      </div>
       
       <div class="product-name">Uncompressed AV-over-IP platform</div>
       <div class="features-video-container">
@@ -39,10 +39,10 @@
             </video>
           </div>
           
-          <!-- Video Thumbnails with actual images -->
+          <!-- Video Thumbnails with only first 4 videos -->
           <div class="video-thumbnails">
             <div 
-              v-for="(video, index) in videoOptions" 
+              v-for="(video, index) in videos.slice(0, 4)" 
               :key="index"
               class="video-thumbnail"
               :class="{ 'active': currentVideo === video.src }"
@@ -85,35 +85,16 @@
 </template>
 
 <script setup>
-import BrandTitle from '../ui/BrandTitle.vue';
-import { ref, onMounted } from 'vue';
+// Import removed BrandTitle
+import { ref, onMounted, inject } from 'vue';
+
+// Inject the video data provided by App.vue
+const videos = inject('videoData');
 
 // Define refs and state
 const videoRef = ref(null);
 const isMuted = ref(true);
-const videoOptions = [
-  { 
-    src: '/output.mp4', 
-    label: 'Surgical Procedure', 
-    thumbnail: '/thumbnails/t1.PNG'
-  },
-  { 
-    src: '/output1.mp4', 
-    label: 'Endoscopic View', 
-    thumbnail: '/thumbnails/t2.PNG'
-  },
-  { 
-    src: '/output2.mp4', 
-    label: 'OR Environment', 
-    thumbnail: '/thumbnails/t3.PNG'
-  },
-  { 
-    src: '/output3.mp4', 
-    label: 'Remote Consultation', 
-    thumbnail: '/thumbnails/t4.PNG'
-  }
-];
-const currentVideo = ref(videoOptions[0].src);
+const currentVideo = ref(videos[0].src);
 
 const toggleMute = () => {
   if (videoRef.value) {
@@ -180,21 +161,36 @@ const emit = defineEmits(['read-more', 'open-video-gallery']);
 @import '../../styles/buttons.css';
 
 /* Custom styles specific to WelcomeContainer */
+.welcome-header {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.left-aligned-title {
+  text-align: left;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.title-word {
+  display: inline-block;
+  margin-right: 5px;
+}
+
 .features-video-container {
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
 }
 
-.title-word {
-  display: inline-block;
-  margin: 0 5px;
-}
-
 .product-name {
   font-size: 1.4rem;
   color: #34495e;
   margin-bottom: 20px;
+  text-align: left;
 }
 
 /* Video specific styles */

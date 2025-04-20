@@ -2,7 +2,6 @@
 <template>
   <div class="container-base collaboration-container">
     <div class="container-content">
-      <div class="brand-title">Nexxis</div>
       <h2 class="section-title">Easy to share and collaborate</h2>
       
       <p class="section-description">

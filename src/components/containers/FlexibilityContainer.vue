@@ -2,7 +2,6 @@
 <template>
   <div class="container-base flexibility-container">
     <div class="container-content">
-      <BrandTitle />
       <h2 class="section-title">The flexibility you've always wanted</h2>
       
       <p class="section-description">

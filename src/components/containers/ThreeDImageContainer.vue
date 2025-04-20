@@ -2,7 +2,6 @@
 <template>
   <div class="container-base threed-container">
     <div class="container-content">
-      <div class="brand-title">Nexxis</div>
       <h2 class="section-title">3D imaging with MDSC-8232 M3D</h2>
       
       <div class="monitor-showcase">
@@ -13,15 +12,7 @@
       <p class="section-description">
         The MDSC-8232 M3D is a 31-inch, 2D and 3D 4K surgical monitor that can be seamlessly integrated into Nexxis architectures. With this display integrated into your Nexxis system, 3D sources become part of the full integration, including support for inter-OR sharing, remote management, streaming and recording.
       </p>
-      
-      <div class="translation-feature">
-        <div class="display-icons">
-          <span class="display-3d">3D</span>
-          <span class="arrow-icon">→</span>
-          <span class="display-2d">2D</span>
-        </div>
-        <p>3D source images are automatically translated into 2D or 3D for maximum visibility.</p>
-      </div>
+
       
       <NavigationButtons 
         :showBack="true"

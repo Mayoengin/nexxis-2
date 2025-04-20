@@ -2,7 +2,6 @@
 <template>
   <div class="container-base technology-container">
     <div class="container-content">
-      <div class="brand-title">Nexxis</div>
       <h2 class="section-title">Always up to date</h2>
       
       <p class="section-description">
@@ -16,10 +15,7 @@
         <li class="feature-item">Expansion results in lower TCO</li>
       </ul>
       
-      <div class="certification-note">
-        <div class="cert-icon">✅</div>
-        <p>Certified as a medical device (CE/FDA), Nexxis is fit for use in the interventional OR. Every part of the solution has been designed and approved for use in a surgical environment.</p>
-      </div>
+
       
       <NavigationButtons 
         :showBack="true"
