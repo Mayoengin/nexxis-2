@@ -38,16 +38,7 @@
 <script setup>
 import { UPDATE_ICON, TECH_ICON, NETWORK_ICON, CERTIFIED_ICON } from '../../icons/index.js';
 
-// Animation state
-const props = defineProps({
-  isAnimating: {
-    type: Boolean,
-    default: false
-  }
-});
 
-// Define emits
-defineEmits(['go-back', 'go-next', 'go-home']);
 </script>
 
 <style scoped>

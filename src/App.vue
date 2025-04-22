@@ -101,7 +101,7 @@ const currentComponent = computed(() => {
 
 // Define the shared video data
 const videoData = [
-  { 
+{ 
     src: '/output.mp4', 
     label: 'Surgical Procedure', 
     thumbnail: '/thumbnails/t1.PNG',
@@ -126,10 +126,28 @@ const videoData = [
     description: 'Live collaboration session with real-time video sharing between surgical teams in different locations.' 
   },
   { 
-    src: '/output4.mp4', 
-    label: 'Laparoscopic Procedure', 
-    thumbnail: '/thumbnails/t5.PNG',
-    description: 'Advanced laparoscopic surgery with 4K video quality showing tissue detail and instrument precision.' 
+    src: '/output.mp4', 
+    label: 'Surgical Procedure', 
+    thumbnail: '/thumbnails/t1.PNG',
+    description: 'High-definition footage of a minimally invasive surgical procedure demonstrating precise instrument control.' 
+  },
+  { 
+    src: '/output1.mp4', 
+    label: 'Endoscopic View', 
+    thumbnail: '/thumbnails/t2.PNG',
+    description: 'Detailed endoscopic visualization with uncompressed transmission for maximum detail clarity.' 
+  },
+  { 
+    src: '/output2.mp4', 
+    label: 'OR Environment', 
+    thumbnail: '/thumbnails/t3.PNG',
+    description: 'Operating room setup with Nexxis integration showing multiple displays and control systems.' 
+  },
+  { 
+    src: '/output3.mp4', 
+    label: 'Remote Consultation', 
+    thumbnail: '/thumbnails/t4.PNG',
+    description: 'Live collaboration session with real-time video sharing between surgical teams in different locations.' 
   }
 ];
 

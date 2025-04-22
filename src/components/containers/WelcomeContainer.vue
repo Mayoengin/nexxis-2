@@ -91,22 +91,6 @@ const videoRef = ref(null);
 const isMuted = ref(true);
 const currentVideo = ref(videos[0].src);
 
-const toggleMute = () => {
-  if (videoRef.value) {
-    videoRef.value.muted = !videoRef.value.muted;
-    isMuted.value = videoRef.value.muted;
-  }
-};
-
-const selectVideo = (videoSrc) => {
-  currentVideo.value = videoSrc;
-  // Reset video to beginning when switching
-  if (videoRef.value) {
-    videoRef.value.currentTime = 0;
-    videoRef.value.play();
-  }
-};
-
 // Function to open the video gallery
 const openVideoGallery = (videoSrc) => {
   emit('open-video-gallery', videoSrc);
@@ -130,7 +114,6 @@ const features = [
 // Reactive state for buttons and bell
 const quoteButtonPressed = ref(false);
 const buyButtonPressed = ref(false);
-const bellActive = ref(false);
 
 // Toggle functions
 const toggleQuoteButton = () => {
@@ -141,9 +124,7 @@ const toggleBuyButton = () => {
   buyButtonPressed.value = !buyButtonPressed.value;
 };
 
-const toggleBell = () => {
-  bellActive.value = !bellActive.value;
-};
+
 
 // Define emits
 const emit = defineEmits(['read-more', 'open-video-gallery']);

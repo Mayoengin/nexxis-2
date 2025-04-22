@@ -1,7 +1,6 @@
 // src/components/containers/VideoGalleryContainer.vue
 <template>
   <div class="container-base video-gallery-container">
-    <!-- Close button (X) outside the container in the top-right -->
     <button 
       class="close-button" 
       @click="handleClose"

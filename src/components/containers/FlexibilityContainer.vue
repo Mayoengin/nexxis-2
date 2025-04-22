@@ -10,7 +10,7 @@
       
       <FeatureList 
         :items="features"
-        color="green"
+        color="blue"
       />
       
 

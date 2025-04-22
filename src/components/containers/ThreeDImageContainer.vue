@@ -47,16 +47,9 @@
 <script setup>
 import { MONITOR_ICON, DISPLAY_ICON, GLASSES_ICON, VISIBILITY_ICON } from '../../icons/index.js';
 
-// Animation state
-const props = defineProps({
-  isAnimating: {
-    type: Boolean,
-    default: false
-  }
-});
 
-// Define emits
-defineEmits(['go-back', 'go-next', 'go-home']);
+
+
 </script>
 
 <style scoped>

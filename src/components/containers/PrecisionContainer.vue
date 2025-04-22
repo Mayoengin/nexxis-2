@@ -12,15 +12,14 @@
         :items="features"
         color="blue"
       />
-      
-      <!-- Navigation buttons removed since we now use side arrows -->
+
+ 
     </div>
   </div>
 </template>
 
 <script setup>
 import FeatureList from '../ui/FeatureList.vue';
-
 // Features data
 const features = [
   'Raw, uncompressed images – eliminating artifacts',
@@ -28,16 +27,8 @@ const features = [
   '4K end-to-end'
 ];
 
-// Animation state
-const props = defineProps({
-  isAnimating: {
-    type: Boolean,
-    default: false
-  }
-});
 
 // Define emits (keeping these for potential future use)
-defineEmits(['go-back', 'go-next', 'go-home']);
 </script>
 
 <style scoped>
